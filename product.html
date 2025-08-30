@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block pageheading %}
+{% if selected_category_name %}
+    <h2 class="category-selected">Showing products in: {{ selected_category_name }}</h2>
+  {% endif %}
+
+{% endblock %}
+
+{% block main %}
+
+<div class="category-products">
+  <ul class="category-menu">
+    <li><a href="/products/0" class="category-item">All</a></li>
+    {% for category in categories %}
+      <li><a href="/products/{{ category[0] }}" class="category-item">{{ category[1] }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+
+<div class="product-gallery">
+  {% for product in products %}
+  <div class="product-card">
+    <a href="/product/{{ product[0] }}">
+      <h3 class="product-title">{{ product[2] }}</h3>
+      <img src="/static/images/{{ product[7] }}" alt="{{ product[2] }}" class="product-image"> 
+    </a>
+    <p class="product-description">{{ product[6] }}</p>
+    <p class="product-designer"><strong>Designer:</strong> {{ product[1] }}</p>
+    <p class="product-info"><strong>Price:</strong> {{ product[4] }}</p>
+    <p class="product-stockleft"><strong>Stock Left:</strong> {{ product[5] }}</p>
+    {% if ordering %}
+    <a class="add-to-cart" href="/add_to_cart/{{ product[0] }}">Add to cart</a>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
