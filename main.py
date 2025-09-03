@@ -272,6 +272,23 @@ def render_admin():
     return render_template("admin.html", logged_in=is_logged_in(), categories=category_list, no_items=True)
   return render_template("admin.html", logged_in=is_logged_in(), categories=category_list, products=product_list)
 
+@app.route("/delete_item_page")
+def delete_item_page():
+  con = create_connection(DATABASE)
+  cur = con.cursor()
+
+  # fetch categories
+  cur.execute("SELECT cat_id, name FROM category")
+  categories = cur.fetchall()
+
+  # fetch products
+  cur.execute("SELECT product_id, dname, itemname FROM products")
+  products = cur.fetchall()
+  con.close()
+
+  return render_template("delete_item_page.html", categories=categories, products=products)
+
+
 #adding a category function
 @app.route('/add_category', methods = ['POST'])
 def add_category():
@@ -300,7 +317,7 @@ def render_delete_category():
   if not is_admin():
     return redirect('/?message=Access+Denied+Not+Admin+Account')
   if request.method == "POST":
-    con=create_connection(DATABASE)
+    con = create_connection(DATABASE)
     category = request.form.get('cat_id')
     print(category)
     category = category.split(", ")
@@ -345,7 +362,7 @@ def render_add_item():
 
     print(product_id, dname, itemname, cat_id, price, stockleft, description,image)
     con = create_connection(DATABASE)
-    query = "INSERT INTO products ('product_id', 'dname', 'itemname', 'cat_id', 'price', 'stockleft','description', 'image') VALUES (?, ?, ?, ?, ?, ?, ?)"
+    query = "INSERT INTO products ('product_id', 'dname', 'itemname', 'cat_id', 'price', 'stockleft','description', 'image') VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
     cur = con.cursor()
     cur.execute(query, (product_id, dname, itemname, cat_id, price, stockleft, description, image))
     con.commit()
@@ -468,7 +485,7 @@ def cancel_order():
   session.pop('order')
   return redirect('/?message=Cart+Cleared.')
 
-@app.route('/orders/<processed>')
+'''@app.route('/orders/<processed>')
 def render_processed_orders(processed):
   label = "processed"
   if processed == "1":
@@ -493,19 +510,19 @@ def render_processed_orders(processed):
       orders[-1][4] += order[4] * order[5]
     print(orders)
 
-  return render_template('orders.html', orders=orders, label=label, logged_in=is_logged_in())
+  return render_template('orders.html', orders=orders, label=label, logged_in=is_logged_in())'''
 
 #process order with order id
-@app.route('/process_orders/<order_id>', methods=['POST'])
-def process_order(order_id):
-  if not is_admin():
+#@app.route('/process_orders/<order_id>', methods=['POST'])
+#def process_order(order_id):
+'''if not is_admin():
     return redirect('/?message=Access+Denied+Not+Admin+Account')
   if request.method == 'POST':
     print("updating order process function")
     #set the processed flag to 0 to mark it as processed
     put_data("UPDATE orders SET processed=0 WHERE order_id=?", (order_id, ))
     print("Order processed:", order_id)
-    return redirect(request.referrer)
+    return redirect(request.referrer)'''
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0', port=81, debug=True)
