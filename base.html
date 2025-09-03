@@ -3,9 +3,9 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Plantitude | home</title>
+    <title>Gather & Co | home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+CU:wght@100..400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"/>
     <link href="\static\designer.css" rel="stylesheet">
 </head>
@@ -13,23 +13,23 @@
 <body>
 <nav>
     <div class="container">
-        <div class="navbar-brand">Plantitude.</div>
+        <div class="navbar-brand">Gather & Co.</div>
         <div class="navbar-links">
-            <a href="/">home</a>
-            <a href="/products/1">products</a>
-            <a href="/contact">contact</a>
+            <a href="/">Home</a>
+            <a href="/products/1">Products</a>
+            <a href="/contact">Contact</a>
           {% if logged_in %}
-          <a href ="/logout">logout</a>          
+          <a href ="/logout">Logout</a>          
           {% else %}
-          <a href="/login">login</a>
+          <a href="/login">Login</a>
           {% endif %}
           {% if ordering %}
-          <a href="/cart">cart</a>
+          <a href="/cart">Cart</a>
           {% else %}
-          <a href="/products/1?order=start">order</a>
+          <a href="/products/1?order=start">Order</a>
           {% endif %}
           {% if session.get('role') == 'admin' %}
-          <a href="/admin">admin</a>
+          <a href="/admin">Admin</a>
           {% endif %}
 
         </div>
@@ -37,7 +37,8 @@
 </nav>
 <div class="container">
     <header>
-        <h1>Plantitude</h1>
+        <h1>Gather & Co</h1>
+        <img src="/static/images/web_logo.jpg" alt="base page" style="width:20px; height:20px; float: left; padding: 20px">
         <h2>{% block pageheading %}{% endblock %}</h2>
     </header>
 
