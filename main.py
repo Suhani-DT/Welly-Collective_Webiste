@@ -335,6 +335,7 @@ def render_add_item():
     product_id = request.form.get('product_id')
     dname = request.form.get('dname').strip()
     itemname = request.form.get('itemname').lower().strip()
+    cat_id = request.form.get('cat_id').strip()
     price = request.form.get('price').strip()
     stockleft = request.form.get('stockleft').strip()
     description = request.form.get('description').strip()
@@ -342,11 +343,11 @@ def render_add_item():
 
 
 
-    print(product_id, dname, itemname, price, stockleft, description,image)
+    print(product_id, dname, itemname, cat_id, price, stockleft, description,image)
     con = create_connection(DATABASE)
-    query = "INSERT INTO products ('product_id', 'dname', 'itemname', 'price', 'stockleft','description', 'image') VALUES (?, ?, ?, ?, ?, ?, ?)"
+    query = "INSERT INTO products ('product_id', 'dname', 'itemname', 'cat_id', 'price', 'stockleft','description', 'image') VALUES (?, ?, ?, ?, ?, ?, ?)"
     cur = con.cursor()
-    cur.execute(query, (product_id, dname, itemname, price, stockleft, description, image))
+    cur.execute(query, (product_id, dname, itemname, cat_id, price, stockleft, description, image))
     con.commit()
     con.close()
   return redirect('/admin')
@@ -424,7 +425,7 @@ def render_cart():
     name = request.form['name']
     print(name)
     put_data("INSERT INTO orders VALUES (null, ?, TIME('now'), ?)", (name, 1))
-    order_number = get_list("SELECT max(id) FROM orders WHERE name = ?",
+    order_number = get_list("SELECT max(order_id) FROM orders WHERE name = ?",
                             (name, ))
     print(order_number)
     order_number = order_number[0][0]
@@ -445,7 +446,7 @@ def render_cart():
     orders = summarise_order()
     total = 0
     for item in orders:
-      item_detail = get_list("SELECT name, price FROM products WHERE product_id = ?",
+      item_detail = get_list("SELECT itemname, price FROM products WHERE product_id = ?",
                              (item[0], ))
       print(item_detail)
       if item_detail:
@@ -467,14 +468,15 @@ def cancel_order():
   session.pop('order')
   return redirect('/?message=Cart+Cleared.')
 
-@app.route('/process_orders/<processed>')
+@app.route('/orders/<processed>')
 def render_processed_orders(processed):
   label = "processed"
   if processed == "1":
     label = "un" + label
   #get the list of orders
   processed = int(processed)
-  all_orders = get_list("SELECT orders.id, orders.name, orders.timestamp, products.name, order_content.quantity, products.price FROM orders"
+  # Whats does this mean
+  all_orders = get_list("SELECT order.id, order.name, order.timestamp, products.itemname, order_content.quantity, products.price FROM orders"
                      " INNER JOIN order_content ON orders.id=order_content.order_id"
                      " INNER JOIN products ON order_content.product_id=products.id"
                      " INNER JOIN category ON products.cat_id = category.id"
