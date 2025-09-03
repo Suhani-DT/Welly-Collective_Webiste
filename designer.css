@@ -1,12 +1,12 @@
 * {
-    font-family: 'Manrope', sans-serif;
     padding: 0;
     margin: 0;
     box-sizing: border-box;
   }
   
   body {
-    background-color: rgba(236, 240, 241, 1.0);
+    background: linear-gradient(to bottom, #71dac8 0%, #ffcccc 100%);
+
   }
   
   .container {
@@ -23,12 +23,14 @@
   img {
     max-width: 100%;
   }
-  
+   
+ 
   h1 {
+    font-family: "Playwrite CU", cursive;
     text-align: center;
     font-weight: 200;
     font-size: 4rem;
-    margin: 0;
+    margin-top: 2rem;
   }
   
   h2 {
@@ -38,8 +40,9 @@
   }
   
   nav {
-    background-color: rgba(143, 219, 172);
-    text-align: center;
+    background-color: #1cd1b6;
+    text-align: left;
+    font-family: "Scheherazade New", serif;
     font-size: 1.5rem;
     padding-top: 0.4rem;
     padding-bottom: 0.7rem;
@@ -66,7 +69,7 @@
   }
   
   a, a:visited {
-    color: rgba(52, 152, 219, 1.0);
+    color: rgb(245, 245, 245);
     text-decoration: none;
   }
   
@@ -80,7 +83,7 @@
 
 .product-card {
   width: 280px;
-  background-color: white;
+  background-color: #dbacac;
   border: 1px solid #dcdcdc;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
@@ -118,6 +121,7 @@
 }
 
 .product-title {
+  font-family: "Playwrite CU", cursive;
   font-size: 1.2rem;
   color: #0077cc;
   margin-bottom: 0.5rem;
@@ -156,7 +160,7 @@
 }
 
 .add-to-cart:hover {
-  background-color: #005fa3;
+  background-color: #ffffff;
 }
 
   
@@ -340,7 +344,7 @@ th{
 }
 
 .button {
-  background-color:  rgba(143, 219, 172);
+  background-color:  rgb(101, 102, 181);
   color: white;
   padding: 8px 16px;
   border: none;
@@ -412,4 +416,40 @@ th{
   font-size: 2rem;
   margin: 1.5rem 0;
   color: #333;
+}
+
+.home_page {
+  font-family: "Scheherazade New", serif;
+  font-weight: 400;
+  font-style: normal;
+  padding: 30px;
+  margin-top: 0;
+}
+
+/*Pop-up button for Cart*/
+.alert {
+  padding: 20px;
+  background-color: purple;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
+/*Drop down menu for Deleting an Item*/
+.myform select {
+  width: 300px;   /* Adjust as needed */
+  padding: 5px;
 }
