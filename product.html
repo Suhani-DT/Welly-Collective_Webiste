@@ -27,7 +27,7 @@
     </a>
     <p class="product-description">{{ product[6] }}</p>
     <p class="product-designer"><strong>Designer:</strong> {{ product[1] }}</p>
-    <p class="product-info"><strong>Price:</strong> {{ product[4] }}</p>
+    <p class="product-info"><strong>Price:</strong> ${{ product[4] }}</p>
     <p class="product-stockleft"><strong>Stock Left:</strong> {{ product[5] }}</p>
     {% if ordering %}
     <a class="add-to-cart" href="/add_to_cart/{{ product[0] }}">Add to cart</a>
