@@ -1,9 +1,21 @@
 {% extends "base.html" %}
 
-{% block pageheading %}welcome{% endblock %}
+{% block pageheading %}{% endblock %}
 
 {% block main %}
+    <div class="home_page">
+        <p> Welcome to Gather & Co, a vibrant collective where curiosity meets creativity. We bring together makers, dreamers, and innovators under 
+        one roof to spark discovery and inspire wonder. From thoughtfully crafted goods to one-of-a-kind finds, every item here tells a story—and every
+         visit feels like an exploration. Step inside, and let your sense of adventure guide you. </p>
+    </div>
+ 
+
     {% if message %}
         <div class="message">{{ message }}</div>
     {% endif %}
+
+    <!--Add Image-->
+    <div class="staff_pic">
+        <img src="/static/images/1743016480763.jpeg" alt="home page" style="width: 430px; height: 345px; padding: 50px; float: right;">
+    </div>
 {% endblock %}
