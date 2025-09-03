@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block pageheading %} Administration {% endblock %}
+
+{% block main %}
+
+<a href="/admin">Admin Mangement</a>
+<a href="/delete_item_page">Delete Item</a>
+
+<form class="myform" method="post" action="/add_item">
+  <div class="form-group">
+    <div class="form-label"><label for="dname">Item Designer Name:</label></div>
+    <div class="form-element"><input type="text" name="dname" id="dname" required></div>
+  </div>
+  <div class="form-group">
+    <div class="form-label"><label for="itemname">Item Name:</label></div>
+    <div class="form-element"><input type="text" name="itemname" id="itemname" required></div>
+  </div>
+  <div class="form-group">
+    <div class="form-label"><label for="price">Item Price:</label></div>
+    <div class="form-element"><input type="text" name="price" id="price" required></div>
+  </div>
+  <div class="form-group">
+    <div class="form-label"><label for="stockleft">Item Stockleft:</label></div>
+    <div class="form-element"><input type="text" name="stockleft" id="stockleft" required></div>
+  </div>
+  <div class="form-group">
+    <div class="form-label"><label for="description">Item Description:</label></div>
+    <div class="form-element"><input type="text" name="description" id="description" required></div>
+  </div>
+  <div class="form-group">
+    <div class="form-label"><label for="image">Item Image Name:</label></div>
+    <div class="form-element"><input type="text" name="image" id="image" required></div>
+  </div>
+  <div class="form-group">
+    <div class="form-label"><label for="cat_id">Category:</label></div>
+    <div class="form-element">
+      <select id="cat_id" name="cat_id" required>
+        {% for category in categories %}
+          <option value="{{ category[0] }}">{{ category[1] }} </option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="form-label"></div>
+    <div class="form-element"><input type="submit" value="Add Item"></div>
+  </div>
+</form>
+
+
+<h4> Delete an item </h4>
+<form class ="myform" method="post" action="/delete_item">
+  <div class ="form-group">
+    <div class ="form-label"><label for="product_id"> Designer Products:</label></div>
+    <div class ="form-element">
+      <select id="product_id" name="product_id" style="width: 300px;" >
+        {% for product in products %}
+          <option value ="{{ product[0] }}">{{ product[2] }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div class ="form-group">
+    <div class ="form-label"></div>
+    <div class ="form-element"><input type="submit" value ="Delete Item"></div>
+  </div>
+</form>
+{% endblock %}
