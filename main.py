@@ -65,6 +65,8 @@ def put_data(query, params):
 
 
 def summarise_order():
+  if 'order' not in session or not session['order']:
+    return []
   print("sum ord def")
   order = session['order']
   print(order)
@@ -369,33 +371,25 @@ def render_add_item():
     con.close()
   return redirect('/admin')
 
-
-#deleting a item function
 @app.route('/delete_item', methods=['POST'])
 def render_delete_item():
   if not is_logged_in():
-    return redirect('/message=Need+to+be+logged+in.')
+    return redirect('/message=test+not+logged')
   if not is_admin():
     return redirect('/?message=Access+Denied+Not+Admin+Account')
-
   if request.method == "POST":
-    con=create_connection(DATABASE)
-    products = request.form.get('item_id')
-    print(products)
-    if products is None:
-      return redirect("/admin?error=No+item+selected")
-
-    products = products.split(", ")
-    item_id = products[0]
-    item_name = products[1] if len(products) > 1 else "" #assign an empty string if item_name doesn't exist
-    print(item_id, item_name)
-
-    return render_template("delete_item_confirm.html", id=item_id, name=item_name, type='products')
-  return redirect("/admin")
+    con = create_connection(DATABASE)
+    item = request.form.get('product_id')
+    print(item)
+    parts = item.split(", ")
+    product_id = parts[0]
+    itemname = parts[1] if len(parts) > 1 else "" 
+    return render_template("delete_item_confirm.html", id=product_id, name=itemname, type='product')
+  return redirect('/admin')
 
 #confirm delete item
-@app.route('/delete_item_confirm/<int:item_id>')
-def render_delete_item_confirm(item_id):
+@app.route('/delete_item_confirm/<int:product_id>')
+def render_delete_item_confirm(product_id):
   print("I am in here")
   if not is_logged_in():
     return redirect('/message=Need+to+be+logged+in.')
@@ -405,9 +399,9 @@ def render_delete_item_confirm(item_id):
   con=create_connection(DATABASE)
   query = "DELETE FROM products WHERE product_id = ?"
   cur = con.cursor()
-  cur.execute(query, (item_id, ))
+  cur.execute(query, (product_id, ))
   con.commit()
-  print("Test: ", item_id)
+  print("Test: ", product_id)
   con.close()  
 
   return redirect("/admin")
@@ -435,29 +429,31 @@ def add_to_cart(product_id):
   return redirect(request.referrer)
 
 
-#cart function
+#cart function & Pop-up function
 @app.route('/cart', methods=['POST', 'GET'])
 def render_cart():
   if request.method == "POST":
     name = request.form['name']
     print(name)
     put_data("INSERT INTO orders VALUES (null, ?, TIME('now'), ?)", (name, 1))
-    order_number = get_list("SELECT max(order_id) FROM orders WHERE name = ?",
-                            (name, ))
+    order_number = get_list("SELECT max(order_id) FROM orders WHERE name = ?", (name, ))
     print(order_number)
     order_number = order_number[0][0]
     orders = summarise_order()
     print("Orders:", orders)
-    #session['message'] = f"Order has been placed under the name {name}"
-    #return redirect('/')
 
+    
     for order in orders:
       put_data("INSERT INTO order_content VALUES (null, ?, ?, ?)",
                (order_number, order[0], order[1]))
     session['message'] = f"Order has been placed under the name {name}"
     print("Session message:", session['message'])
-    session.pop('order')
-    return redirect(f'/?message=Order+has+been+placed+under+the+name+{name}')
+    session.pop('order', None)
+    message = (f'/?message=Order+has+been+placed+under+the+name+{name}') # fix the error made here
+    print(message)
+    return redirect(f"/?message=Order+has+been+placed+under+the+name+{name}")
+
+    #return redirect(f'/?message=Order+has+been+placed+under+the+name+{name}') # fix the error made here
 
   else:
     orders = summarise_order()
@@ -471,12 +467,13 @@ def render_cart():
         item.append(item_detail[0][1])
         item.append(item_detail[0][1] * item[1])
         total += item_detail[0][1] * item[1]
-    print("Orders:", orders)
+    #print("Orders:", orders)
+    message = session.pop('message', None)
     return render_template("cart.html",
                            logged_in=is_logged_in(),
                            ordering=is_ordering(),
                            products=orders,
-                           total=total)
+                           total=total, message=message)
 
 
 #cancel order function
@@ -484,45 +481,6 @@ def render_cart():
 def cancel_order():
   session.pop('order')
   return redirect('/?message=Cart+Cleared.')
-
-'''@app.route('/orders/<processed>')
-def render_processed_orders(processed):
-  label = "processed"
-  if processed == "1":
-    label = "un" + label
-  #get the list of orders
-  processed = int(processed)
-  # Whats does this mean
-  all_orders = get_list("SELECT order.id, order.name, order.timestamp, products.itemname, order_content.quantity, products.price FROM orders"
-                     " INNER JOIN order_content ON orders.id=order_content.order_id"
-                     " INNER JOIN products ON order_content.product_id=products.id"
-                     " INNER JOIN category ON products.cat_id = category.id"
-                     " WHERE orders.processed=?", (processed, ))
-  print(all_orders)
-  orders = []
-  last_id = -1
-  for order in all_orders:
-    if order[0] != last_id:
-      orders.append([])
-      orders[-1] = [order[0], order[1], order[2], [], 0]
-      last_id = order[0]
-      orders[-1][3].append([order[3], order[4], order[5], order[4] * order[5]])
-      orders[-1][4] += order[4] * order[5]
-    print(orders)
-
-  return render_template('orders.html', orders=orders, label=label, logged_in=is_logged_in())'''
-
-#process order with order id
-#@app.route('/process_orders/<order_id>', methods=['POST'])
-#def process_order(order_id):
-'''if not is_admin():
-    return redirect('/?message=Access+Denied+Not+Admin+Account')
-  if request.method == 'POST':
-    print("updating order process function")
-    #set the processed flag to 0 to mark it as processed
-    put_data("UPDATE orders SET processed=0 WHERE order_id=?", (order_id, ))
-    print("Order processed:", order_id)
-    return redirect(request.referrer)'''
 
 if __name__ == "__main__":
   app.run(host='0.0.0.0', port=81, debug=True)
