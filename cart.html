@@ -55,13 +55,15 @@ cart
     <div class="form-label"></div>
     <div class="form-element"><input type="submit" value="Place Order"></div>
   </div>
-
-  <div class="alert">
-    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-    <p> Indicates a dangerous or potentially negative action. </p>
   </div>
-    </div>
 </form>
+
+  {% if message %}
+    <div class="alert">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+      <p>{{ message }}</p>
+    </div>
+  {% endif %}
 <!--{% endif %}-->
 
 {% endblock %}
