@@ -387,6 +387,57 @@ def render_delete_item():
     return render_template("delete_item_confirm.html", id=product_id, name=itemname, type='product')
   return redirect('/admin')
 
+#Would I need this 
+#Edit product 
+@app.route("/edit_product", methods=["GET", "POST"])
+def edit_product():
+  if not is_logged_in():
+    return redirect("/?message=Need+to+be+logged+in.")
+  if not is_admin():
+    return redirect("/?message=Access+Denied+Not+Admin+Account")
+  product_id = request.args.get("product_id", type=int) 
+
+  #GET query from string
+  if not product_id:
+    return redirect("/admin?error=Product+Not+Found")
+  
+  con = create_connection(DATABASE)
+  cur = con.cursor()
+
+  if request.method == "POST":
+  # pull new values from the form
+    new_dname = request.form.get("dname").strip()
+    new_name = request.form.get("itemname").strip()
+    new_cat = request.form.get("cat_id")
+    new_price = request.form.get("price").strip()
+    new_stockleft = request.form.get("stockleft").strip()
+    new_description = request.form.get("description").strip()
+    new_image = request.form.get("image").strip()
+    query = "UPDATE products SET dname=?, itemname=?, cat_id=?, price=?, stockleft=?, description=?, image=? WHERE id=?"
+    cur.execute(query, (new_dname, new_name, new_cat, new_price, new_stockleft, new_description, new_image, product_id))
+
+    con.commit()
+    con.close()
+    return redirect("/admin?message=product+updated")
+
+ # GET → show form
+  else:
+    cur.execute("SELECT * FROM products WHERE product_id=?", (product_id,))
+    product = cur.fetchone()
+  
+    # also fetch categories for the dropdown
+    cur.execute("SELECT * FROM category")
+    categories = cur.fetchall()
+    con.close()
+
+  return render_template("edit_product.html",
+                           product=product,
+                           categories=categories,
+                           logged_in=is_logged_in())
+
+
+
+
 #confirm delete item
 @app.route('/delete_item_confirm/<int:product_id>')
 def render_delete_item_confirm(product_id):
@@ -449,11 +500,7 @@ def render_cart():
     session['message'] = f"Order has been placed under the name {name}"
     print("Session message:", session['message'])
     session.pop('order', None)
-    message = (f'/?message=Order+has+been+placed+under+the+name+{name}') # fix the error made here
-    print(message)
-    return redirect(f"/?message=Order+has+been+placed+under+the+name+{name}")
-
-    #return redirect(f'/?message=Order+has+been+placed+under+the+name+{name}') # fix the error made here
+    return redirect("/cart")
 
   else:
     orders = summarise_order()
