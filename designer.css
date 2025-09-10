@@ -171,7 +171,7 @@
   }
   
   .form-group {
-    padding-top: 3rem;
+    padding-top: 3.5rem;
   }
   
   .form-label {
@@ -181,17 +181,17 @@
   }
   
   .form-element {
-    width: 70%;
+    width: 65%;
     float: left;
   }
   
   .button-group {
-    margin-top: 3rem;
+    margin-top: 5rem;
     text-align: center;
   }
   
   .button-group input {
-    padding: 0.3rem;
+    padding: 0.5rem;
   }
   
   .form-group input {
@@ -239,6 +239,13 @@
   padding: 2rem;
 }
 
+/*Edit Function Card*/
+
+
+
+
+
+/*Contact Card*/
 .contact-card {
   display: flex;
   flex-direction: row;
@@ -426,27 +433,102 @@ th{
   margin-top: 0;
 }
 
-/*Pop-up button for Cart*/
-.alert {
-  padding: 20px;
-  background-color: purple;
-  color: white;
+/*Pop-up button for Cart (has been added)*/
+/* Alert / pop-up styling */
+.alert-wrapper {
+  max-width: 600px;
+  margin: 20px auto;
 }
 
-.closebtn {
-  margin-left: 15px;
+.alert-toggle {
+  display: none;
+}
+
+.alert {
+  padding: 15px 20px;
+  background-color: #de8db2;
   color: white;
-  font-weight: bold;
-  float: right;
-  font-size: 22px;
-  line-height: 20px;
+  border-radius: 8px;
+  text-align: center;
+  position: relative;
+  font-size: 1rem;
+}
+
+/* Hide alert when checkbox is unchecked */
+.alert-toggle:not(:checked) + .alert {
+  display: none;
+}
+
+/* Close button styling */
+.closebtn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
   cursor: pointer;
-  transition: 0.3s;
+  font-weight: bold;
+  font-size: 20px;
+  background: none;
+  border: none;
+  color: white;
 }
 
 .closebtn:hover {
   color: black;
 }
+
+
+
+/* optionally, you can fade the alert using transition */
+.alert {
+  transition: all 0.3s ease;
+}
+
+
+
+/* Layout for cart design option*/
+/*
+.alert {
+  padding: 10px;
+  background-color: #4CAF50; 
+  color: white;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  cursor: pointer;
+  font-size: 18px;
+}
+.closebtn:hover {
+  color: black;
+}
+.table-container {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+.cart-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.cart-table th, .cart-table td {
+  border: 1px solid #b1a7f3;
+  padding: 8px;
+  text-align: center;
+}
+.cart-table th {
+  background-color: #f2f2f2;
+}
+.myform {
+  margin-top: 20px;
+}
+.form-group {
+  margin-bottom: 10px;
+}
+*/
+
 
 /*Drop down menu for Deleting an Item*/
 .myform select {
