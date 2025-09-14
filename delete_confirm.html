@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 
-{% block pageheading %} Confirm Delete {% endblock %}
+{% block pageheading %} {% endblock %}
 
 {% block main%}
-  <h3> Are you sure you want to delete{{ type }} {{ cat_name }}?</h3>
-    <a href="/delete_{{ type }}_confirm/{{ id }}">Yes</a>
-    <a href="/admin">No</a></h3>
+  <div class="confirm-products">
+    <h3> Are you sure you want to delete {{ type }} {{ cat_name }}?</h3>
+    <ul class="confirm-menu">
+      <li><a href="/delete_{{ type }}_confirm/{{ id }}" class="confirm-item">Yes</a></li>
+      <li><a href="/admin" class="confirm-item">No</a>
+    </ul>
+  </div>
 {% endblock %}
