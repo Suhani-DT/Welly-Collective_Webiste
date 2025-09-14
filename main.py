@@ -379,9 +379,9 @@ def render_delete_item():
     return redirect('/?message=Access+Denied+Not+Admin+Account')
   if request.method == "POST":
     con = create_connection(DATABASE)
-    item = request.form.get('product_id')
-    print(item)
-    parts = item.split(", ")
+    parts = request.form.get('product_id')
+    print(parts)
+    parts = parts.split(", ")
     product_id = parts[0]
     itemname = parts[1] if len(parts) > 1 else "" 
     return render_template("delete_item_confirm.html", id=product_id, name=itemname, type='product')
@@ -406,16 +406,18 @@ def edit_product():
 
   if request.method == "POST":
   # pull new values from the form
-    new_dname = request.form.get("dname").strip()
+    new_dname = request.form.get("dname")
     new_name = request.form.get("itemname").strip()
     new_cat = request.form.get("cat_id")
     new_price = request.form.get("price").strip()
-    new_stockleft = request.form.get("stockleft").strip()
+    new_stockleft = request.form.get("stockleft")
     new_description = request.form.get("description").strip()
     new_image = request.form.get("image").strip()
-    query = "UPDATE products SET dname=?, itemname=?, cat_id=?, price=?, stockleft=?, description=?, image=? WHERE id=?"
+    query = "UPDATE products SET dname=?, itemname=?, cat_id=?, price=?, stockleft=?, description=?, image=? WHERE product_id=?"
     cur.execute(query, (new_dname, new_name, new_cat, new_price, new_stockleft, new_description, new_image, product_id))
 
+    print("Updated")
+    print(new_dname, new_name, new_cat, new_price, new_stockleft, new_description, new_image, product_id)
     con.commit()
     con.close()
     return redirect("/admin?message=product+updated")
