@@ -1,58 +1,79 @@
 {% extends "base.html" %}
 
-{% block pageheading %}Edit Product{% endblock %}
+{% block pageheading %}Edit Products{% endblock %}
 
 {% block main %}
-<div class="myform">
-  <form method="post">
-    <div class="form-group">
-      <label class="form-label">Name:</label>
-      <div class="form-element">
-        <input type="text" name="name" value="{{ product[2] }}" required>
-      </div>
-    </div>
 
-    <div class="form-group">
-      <label class="form-label">Description:</label>
-      <div class="form-element">
-        <textarea name="description" rows="4" required>{{ product[6] }}</textarea>
+<div class="category-products">
+  <ul class="category-menu">
+    <li><a href="/admin" class="category-item">Admin Mangement</a></li>
+    <li><a href="/delete_item_page" class="category-item">Delete Item</a></li>
+  </ul>
+</div>
+
+<div class="edit-product-card">
+  <!--Change the tittle structure-->
+  <h3>Edit Product</h3>
+  <div class="myform">
+    <form method="post">
+      <div class="form-group">
+        <label class="form-label">Name:</label>
+        <div class="form-element">
+          <input type="text" name="itemname" value="{{ product[2] }}" required>
+        </div>
       </div>
-    </div>
 
   
-    <div class="form-group">
-      <label class="form-label">Image URL:</label>
-      <div class="form-element">
-        <input type="text" name="image" value="{{ product[7] }}">
-        {% if product[7] %}
-          <img src="{{ product[7] }}" alt="Product Image" class="product-image">
-        {% endif %}
+      <div class="form-group">
+        <label class="form-label">Designer:</label>
+          <div class="form-element">
+            <input type="text" name="dname" value="{{ product [1] }}" required>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label class="form-label">Price:</label>
-      <div class="form-element">
-        <input type="text" name="price" value="{{ product[4] }}" required>
+      <div class="form-group">
+        <label class="form-label">Description:</label>
+        <div class="form-element">
+          <textarea name="description" rows="4" required>{{ product[6] }}</textarea>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label class="form-label">Category:</label>
-      <div class="form-element">
-        <select name="cat_id" required>
-          {% for c in categories %}
-            <!--This is the main error-->
-            <option value="{{ c[0] }}" {% if c[0] == product[3] %}selected{% endif %}>{{ c[1] }}</option>
-         {% endfor %}
-        </select>
+  
+      <div class="form-group">
+        <label class="form-label">Image URL:</label>
+        <div class="form-element">
+          <input type="text" name="image" value="{{ product[7] }}">
+          {% if product[7] %}
+            <img src="{{ product[7] }}" alt="Product Image" class="product-image">
+          {% endif %}
+        </div>
       </div>
-    </div>
 
-    <div class="button-group">
-      <input type="submit" class="button" value="Save">
-      <a href="/admin" class="button">Cancel</a>
-    </div>
-  </form>
+      <div class="form-group">
+        <label class="form-label">Price:</label>
+        <div class="form-element">
+          <input type="text" name="price" value="{{ product[4] }}" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Category:</label>
+        <div class="form-element">
+          <select name="cat_id" required>
+            {% for c in categories %}
+              <!--This is the main error-->
+              <option value="{{ c[0] }}" {% if c[0] == product[3] %}selected{% endif %}>{{ c[1] }}</option>
+          {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <input type="submit" class="button" value="Save">
+        <a href="/admin" class="button">Cancel</a>
+      </div>
+    </form>
+  </div>
 </div>
 {% endblock %}
