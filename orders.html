@@ -1,19 +1,18 @@
-{% extends 'base.html' %}
+<!--{% extends 'base.html' %}
 
     {% block pageheading %}
     {{ label }} orders
     {% endblock %}
 
     {% block main %}
-    <p><a href="/process_orders/1">Unprocessed Orders l</a> <a href="/process_orders/0"> Processed Orders</a></p>
+    <p><a href="/orders/1">Unprocessed Orders l</a> <a href="/orders/0"> Processed Orders</a></p>
 
     {% for order in orders %} 
-
     <div class="order-heading">
         <h3> Order {{ order[0] }} for {{ order[1] }}, time: {{ order[2] }} </h3>
         {% if label == "unprocessed" %}
         <form action="/process_orders/{{ order[0] }}" method="POST">
-            <input type="hidden" name="_method" value="PUT">
+           <input type="hidden" name="_method" value="PUT"> 
             <button type="submit" class="button"> Mark order as processed</button>
         </form>
         {% endif %}
@@ -39,4 +38,4 @@
         </tr>
     </table>
     {% endfor %}
-{% endblock %}
+{% endblock %} -->
