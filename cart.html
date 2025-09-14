@@ -1,8 +1,6 @@
-
 {% extends 'base.html' %}
 
 {% block pageheading %}
-cart
 {% endblock %}
 
 {% block main %}
@@ -22,48 +20,34 @@ cart
       <td class="number">${{ product[4] }}</td>
     </tr>
     {% endfor %}
-    <!--<tr class="total-row">
-      <td colspan="3" class="total-amount"><strong>Total</strong></td>
-      <td class="number"><strong>${{ total }}</strong></td>
-    </tr> -->
     <tr>
       <th colspan="4" class="number">Total ${{ total }}</th>
     </tr>
   </table>
 
+  <p><a href="/cancel_order">Cancel Order</a></p>
 
-<p><a href="/cancel_order">Cancel Order</a></p>
-
-
-  <!--{% if ordering %} -->
-<form class="myform" method="POST"> <!-- action="/cart"-->
-  <div class="form-group">
-    <div class ="form-label"><label for="name">Name for order:</label></div>
-    <div class="form-element">
-      <input type="text" id="name" name="name" required>
-    </div>
-    <!--<div class="button-group">
-      <input type="submit" value="Place Order" class="order">
+  <form class="myform" method="POST">
+    <div class="form-group">
+      <div class="form-label"><label for="name">Name for order:</label></div>
+      <div class="form-element">
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <div class="form-label"></div>
+        <div class="form-element"><input type="submit" value="Place Order"></div>
+      </div>
     </div>
   </form>
-  <form method = "GET" action="/cancel_order">
-    <div class="button-group">
-      <input type="submit" value="Cancel Order"
-        </div>
-  </form> -->
-  <div class="form-group">
-    <div class="form-label"></div>
-    <div class="form-element"><input type="submit" value="Place Order"></div>
-  </div>
-  </div>
-</form>
 
   {% if message %}
+  <div class="alert-wrapper">
+    <input type="checkbox" id="alert-toggle" class="alert-toggle" checked>
     <div class="alert">
-      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+      <label for="alert-toggle" class="closebtn">&times;</label>
       <p>{{ message }}</p>
     </div>
+  </div>
   {% endif %}
-<!--{% endif %}-->
-
+</div>
 {% endblock %}
