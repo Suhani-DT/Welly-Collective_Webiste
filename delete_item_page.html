@@ -4,8 +4,12 @@
 
 {% block main %}
 
-<a href="/admin">Admin Mangement</a>
-<a href="/delete_item_page">Delete Item</a>
+<div class="category-products">
+  <ul class="category-menu">
+    <li><a href="/admin" class="category-item">Admin Mangement</a></li>
+    <li><a href="/delete_item_page" class="category-item">Delete Item</a></li>
+  </ul>
+</div> 
 
 <form class="myform" method="post" action="/add_item">
   <div class="form-group">
@@ -49,14 +53,14 @@
 </form>
 
 
-<h4> Delete an item </h4>
 <form class ="myform" method="post" action="/delete_item">
+  <h4> Delete an item </h4>
   <div class ="form-group">
     <div class ="form-label"><label for="product_id"> Designer Products:</label></div>
     <div class ="form-element">
       <select id="product_id" name="product_id" style="width: 300px;" >
         {% for product in products %}
-          <option value ="{{ product[0] }}">{{ product[2] }}</option>
+          <option value ="{{ product[0] }}">{{ product[1] }} - {{ product[2] }}</option>
         {% endfor %}
       </select>
     </div>
