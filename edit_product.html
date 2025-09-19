@@ -32,22 +32,17 @@
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="form-group description-group">
         <label class="form-label">Description:</label>
         <div class="form-element">
-          <textarea name="description" rows="4" required>{{ product[6] }}</textarea>
+          <textarea name="description" rows="5" required>{{ product[6] }}</textarea>
         </div>
       </div>
 
-  
-      <div class="form-group">
-        <label class="form-label">Image URL:</label>
-        <div class="form-element">
-          <input type="text" name="image" value="{{ product[7] }}">
-          {% if product[7] %}
-            <img src="{{ product[7] }}" alt="Product Image" class="product-image">
-          {% endif %}
-        </div>
+       <!-- Current preview -->
+      <div class="image-preview">
+        <p>Current image:</p>
+          <img src="/static/images/{{ product[7] if '.' in product[7] else product[7] + '.jpg' }}"alt="{{ product[1] }}" class="product-image">
       </div>
 
       <div class="form-group">
