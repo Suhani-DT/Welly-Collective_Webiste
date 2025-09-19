@@ -2,21 +2,33 @@
 
 {% block pageheading %}{% endblock %}
 
-{% block main %}
-    <div class="home_page">
-        <p> Welcome to Gather & Co, a vibrant collective where curiosity meets creativity. We bring together makers, dreamers, and innovators under 
-        one roof to spark discovery and inspire wonder. From thoughtfully crafted goods to one-of-a-kind finds, every item here tells a story—and every
-         visit feels like an exploration. Step inside, and let your sense of adventure guide you. </p>
-    </div>
- 
+{% block main %} 
+    <h3>Welcome!</h3>
 
     {% if message %}
         <div class="message">{{ message }}</div>
     {% endif %}
 
     <!--Add Image-->
-    <div class="staff_pic">
-        <img src="/static/images/1743016480763.jpeg" alt="home page" style="width: 430px; height: 345px; padding: 50px; float: right;">
-        <p>https://www.linkedin.com/posts/isabel-strijland-growth_make-it-in-studio-ghibli-style-and-activity-7310949958776483840-WhPv</p>
+
+    <div class="flip-card">
+        <div class="flip-card-inner">
+            <div class="flip-card-front">
+                <img src="/static/images/1743016480763.jpeg" alt="home page" style="width:470px;height:400px;">
+            </div>
+            <div class="flip-card-back">
+            <h1>Gather & Co</h1>
+            <p>Welcome to Gather & Co, a vibrant collective where curiosity meets creativity. </p>
+            <p>We bring together makers, dreamers, and innovators under
+        one roof to spark discovery and inspire wonder. </p>
+            <p>From thoughtfully crafted goods to one-of-a-kind finds, every item here tells a story—and every
+         visit feels like an exploration.</p>
+            <p> Step inside, and let your sense of adventure guide you.</p> 
+            <h3>! We love Gather & Co !</h3>
+            <a href="https://www.linkedin.com/posts/isabel-strijland-growth_make-it-in-studio-ghibli-style-and-activity-7310949958776483840-WhPv
+" style=color:blue;><strong>Image source, click here</strong></a>
+        </div>
     </div>
+    
 {% endblock %}
+
